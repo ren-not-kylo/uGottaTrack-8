@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hooked n Stitched</title>
+    <script src="https://use.fontawesome.com/5cd833ef09.js"></script>
+    <link rel="stylesheet" href="bulma.min.css"> 
+    
+    
+  </head>
+
+  <body>
+    <!-- link javascript file inside the body -->
+    <script src="script.js"></script>
+    <div class="columns">
+        <div class="column is-half has-background-light is-fullheight mt-3">
+          <div id="spacer" class="hero is-light is-fullheight ml-3">
+          <div class="section">
+            <div>
+                <h1 class="has-text-info" style="font-size:x-large"><b>uGottaTrack 6</b> - your child monitoring miracle!</h1>
+            </div>
+            <br>
+            <p><b>Parents</b> - View your child’s location below.
+                If they aren’t where they’re supposed to be, ping them to bring them back!
+            <br>
+            <b>Kids</b> - Use this map to make sure you don’t get too far from your <i>Safe Zones</i>!
+            </p>
+          </div>
+          <figure class="image">
+            <img src="10x10.png">
+          </figure>
+          </div>
+        </div>
+
+
+
+        <div class="column is-half">
+            <div class="section"> </div>
+            <div class="level-item">
+                <div class="field has-addons">
+                  <p class="control">
+                    <input id="parent-name-input" class="input is-rounded" type="text" placeholder="Parent Name">
+                  </p>
+                  <p class="control">
+                    <button id="begin-tracking-button" class="button is-link is-rounded">
+                      Begin Tracking
+                    </button>
+                  </p>
+                </div>
+              </div>
+
+              <div class="section">
+              </div>
+              <div class="level-item">
+                <div class="field has-addons">
+                  <p class="control">
+                    <input id="child-name-input" class="input is-rounded" type="text" placeholder="Child Name">
+                  </p>
+                  <p class="control">
+                    <button id="share-location-button" class="button is-link is-rounded">
+                      Share Location
+                    </button>
+                  </p>
+                </div>
+              </div>
+
+            <div class="section">
+            </div>
+            <div class="level-item">
+              <div class="button is-danger is-rounded">
+                ping
+              </div>
+            </div>
+        </div>
+        
+      </div>
+   
+
+    
+  </body>
+</html>

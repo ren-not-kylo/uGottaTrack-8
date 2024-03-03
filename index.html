@@ -46,8 +46,8 @@
               publisher.publish(JSON.stringify(pos));
             });
             
-            function circle(canvas, pos) {
-              ctx.fillStyle = "#3850b7";
+            function circle(canvas, pos, colour) {
+              ctx.fillStyle = colour;
               ctx.beginPath();
               ctx.arc(pos.x, pos.y, 7, 0, Math.PI * 2);
               ctx.fill();
@@ -130,7 +130,7 @@
         let receive = (msg) => {
           let message = JSON.parse(msg.getBinaryAttachment());
           if (message.type === 'location') {
-            circle(canvas, message.pos);
+            circle(canvas, message.pos, "red");
           } else {
             let output = document.getElementById('output');
             output.innerHTML = message.message;

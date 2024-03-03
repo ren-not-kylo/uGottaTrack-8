@@ -1,4 +1,4 @@
-var Subscriber = function (session) {
+var Subscriber = function (session, fn) {
     'use strict';
     var subscriber = {};
     subscriber.session = session;
@@ -16,14 +16,14 @@ var Subscriber = function (session) {
                 subscriber.session.session.subscribe(
                     solace.SolclientFactory.createTopicDestination(topic),
                     true, // generate confirmation when subscription is added successfully
-                    subscriber.topic, // use topic name as correlation key
+                    topic, // use topic name as correlation key
                     10000 // 10 seconds timeout for this operation
                 );
             } catch (error) {
-                subscriber.log(error.toString());
+                console.log(error.toString());
             }
         } else {
-            subscriber.log('Cannot subscribe because not connected to Solace PubSub+ Event Broker.');
+            console.log('Cannot subscribe because not connected to Solace PubSub+ Event Broker.');
         }
     };
 
@@ -49,9 +49,7 @@ var Subscriber = function (session) {
         }
     };
 
-    subscriber.onMessage = function (fn) {
-        subscriber.session.session.on(solace.SessionEventCode.MESSAGE, fn);
-    }
-
+    subscriber.session.session.on(solace.SessionEventCode.MESSAGE, fn);
+    
     return subscriber;
 };

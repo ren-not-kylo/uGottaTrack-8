@@ -20,9 +20,5 @@ let Publisher = function (s,t) {
         }
     };
 
-    publisher.setTopic = function (t) {
-        publisher.topic = t;
-    };
-
     return publisher
 };

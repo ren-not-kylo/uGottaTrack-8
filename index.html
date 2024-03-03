@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hooked n Stitched</title>
+    <title>uGottaTrack Child Wrangler</title>
     <script src="https://use.fontawesome.com/5cd833ef09.js"></script>
     <link rel="stylesheet" href="bulma.min.css"> 
     
@@ -13,13 +13,14 @@
 
   <body>
     <!-- link javascript file inside the body -->
-    <script src="script.js"></script>
+    <script src="canvas.js">
+    </script>
     <div class="columns">
         <div class="column is-half has-background-light is-fullheight mt-3">
           <div id="spacer" class="hero is-light is-fullheight ml-3">
           <div class="section">
             <div>
-                <h1 class="has-text-info" style="font-size:x-large"><b>uGottaTrack 6</b> - your child monitoring miracle!</h1>
+                <h1 class="has-text-link" style="font-size:x-large"><b>uGottaTrack 6</b> - your child monitoring miracle!</h1>
             </div>
             <br>
             <p><b>Parents</b> - View your child’s location below.
@@ -28,9 +29,37 @@
             <b>Kids</b> - Use this map to make sure you don’t get too far from your <i>Safe Zones</i>!
             </p>
           </div>
-          <figure class="image">
-            <img src="10x10.png">
-          </figure>
+          <canvas id="canvas" width="100%" height="100%" style="border:1px solid #000000"></canvas>
+          <script>
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            let dotCoord = {
+              x: 3,
+              y: 3
+            };
+            ctx.fillStyle = "#3850b7";
+            ctx.beginPath();
+            ctx.arc(dotCoord.x, dotCoord.y, 3, 0, Math.PI * 2);
+            ctx.fill();
+            canvas.addEventListener('click',(e) => {
+              var rect = canvas.getBoundingClientRect();
+              dotCoord = {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+              };
+              console.log(e.clientX + ", " + e.clientY);
+
+              ctx.fillStyle = "#3850b7";
+              ctx.beginPath();
+              ctx.arc(e.clientX, e.clientY, 3, 0, Math.PI * 2);
+              ctx.fill();
+            });
+
+
+            
+          </script>
+          
+          
           </div>
         </div>
 

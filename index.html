@@ -28,30 +28,38 @@
           <script>
             let canvas = document.getElementById('canvas');
             let ctx = canvas.getContext('2d');
-            let dotCoord = {
-              x: 3,
-              y: 3
+            let bounds = canvas.getBoundingClientRect();
+            canvas.width = bounds.right;
+            canvas.height = bounds.bottom;
+            let pos = {
+              pos: {
+                x: 400,
+                y: 400
+              },
+              type: 'location'
             };
-            ctx.fillStyle = "#3850b7";
-            ctx.beginPath();
-            ctx.arc(dotCoord.x, dotCoord.y, 3, 0, Math.PI * 2);
-            ctx.fill();
+
             canvas.addEventListener('click',(e) => {
               var rect = canvas.getBoundingClientRect();
-              dotCoord = {
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top
-              };
-              console.log(e.clientX + ", " + e.clientY);
-
+              pos.pos = getMousePos(canvas, e)
+              circle(canvas, pos.pos);
+              publisher.publish(JSON.stringify(pos));
+            });
+            
+            function circle(canvas, pos) {
               ctx.fillStyle = "#3850b7";
               ctx.beginPath();
-              ctx.arc(e.clientX, e.clientY, 3, 0, Math.PI * 2);
+              ctx.arc(pos.x, pos.y, 7, 0, Math.PI * 2);
               ctx.fill();
-            });
+            }
 
-
-            
+            function getMousePos(canvas, mouseEvent) {
+              var rect = canvas.getBoundingClientRect();
+              return {
+                x: mouseEvent.clientX - rect.left,
+                y: mouseEvent.clientY - rect.top
+              };
+            }
           </script>
           
           
@@ -94,7 +102,7 @@
             </div>
             <div class="level-item">
               <input class="input is-rounded" type="text" id="message" placeholder="Message">
-              <div class="button is-danger is-rounded" onclick="publisher.publish(document.getElementById('message').value); document.getElementById('message').value='';">
+              <div class="button is-danger is-rounded" onclick="publisher.publish(message(document.getElementById('message').value)); document.getElementById('message').value='';">
                 ping
               </div>
             </div>
@@ -120,11 +128,26 @@
         let publisher = new Publisher(session, 'DEFAULT');
         
         let receive = (msg) => {
-          let output = document.getElementById('output');
-          output.innerHTML = msg.getBinaryAttachment();
+          let message = JSON.parse(msg.getBinaryAttachment());
+          if (message.type === 'location') {
+            circle(canvas, message.pos);
+          } else {
+            let output = document.getElementById('output');
+            output.innerHTML = message.message;
+          }
+
+
         }
 
         let subscriber = new Subscriber(session, receive);
         subscriber.subscribe('DEFAULT');
+
+        function message(msg) {
+          let message = {
+            type: "message",
+            message: msg
+          };
+          return JSON.stringify(message);
+        }
       </script>
 </html>
